@@ -1,0 +1,20 @@
+core0_control:
+  ros__parameters:
+    use_sim_time: False
+    K: 270.56
+    w: 0.472
+
+core0_odom:
+  ros__parameters:
+    use_sim_time: False
+    odom_tf_pub: False
+    rate_hz: 30.0
+    ticks_meter: 664.0
+    base_width: 0.470
+    base_frame_id: base_footprint
+    odom_frame_id: odom
+    encoder_min: -32768
+    encoder_max: 32768
+
+
+

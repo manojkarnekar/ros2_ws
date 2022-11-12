@@ -1,0 +1,92 @@
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.68%   1.143GiB / 3.863GiB   29.59%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   130.98%   1.143GiB / 3.863GiB   29.59%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.34%   1.143GiB / 3.863GiB   29.59%    0B / 0B   1.5GB / 0B   45
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.95%   1.144GiB / 3.863GiB   29.60%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.67%   1.144GiB / 3.863GiB   29.60%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   131.43%   1.144GiB / 3.863GiB   29.61%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.32%   1.144GiB / 3.863GiB   29.61%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   130.88%   1.144GiB / 3.863GiB   29.61%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.09%   1.144GiB / 3.863GiB   29.61%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   125.79%   1.144GiB / 3.863GiB   29.61%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.79%   1.144GiB / 3.863GiB   29.61%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.75%   1.144GiB / 3.863GiB   29.62%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.69%   1.141GiB / 3.863GiB   29.54%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O    PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   128.32%   1.137GiB / 3.863GiB   29.44%    0B / 0B   1.5GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   131.32%   1.065GiB / 3.863GiB   27.57%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.25%   1.065GiB / 3.863GiB   27.57%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.72%   1.065GiB / 3.863GiB   27.57%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   130.35%   1.065GiB / 3.863GiB   27.57%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.33%   1.065GiB / 3.863GiB   27.57%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.99%   1.058GiB / 3.863GiB   27.40%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.88%   1.058GiB / 3.863GiB   27.40%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.04%   1.058GiB / 3.863GiB   27.40%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.46%   1.058GiB / 3.863GiB   27.40%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.37%   1.059GiB / 3.863GiB   27.40%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   129.48%   1.059GiB / 3.863GiB   27.40%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   134.04%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   128.30%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   131.25%   1.057GiB / 3.863GiB   27.36%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   128.38%   1.057GiB / 3.863GiB   27.36%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.40%   1.057GiB / 3.863GiB   27.36%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.05%   1.057GiB / 3.863GiB   27.36%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   133.85%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   131.63%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   130.20%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   128.47%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   135.05%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   131.61%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.61%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   128.00%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   132.50%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   130.71%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   126.84%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   126.12%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   124.24%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   125.20%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O   BLOCK I/O     PIDS
+7fa6bec83913   arm64_sar_ros2_zed_run_1   124.17%   1.057GiB / 3.863GiB   27.37%    0B / 0B   1.51GB / 0B   47

@@ -1,0 +1,19 @@
+# Ignore everything
+/*
+/*/
+
+# But not these files & folders...
+!.gitignore
+!/CMakeLists.txt  
+!/config
+!/include
+!/launch
+!/maps
+!/package.xml 
+!/rviz  
+!/src  
+!/urdf 
+!/worlds
+!/core0_sim_setup.sh
+!/core0_sim.sh
+!/humble_setup_desktop.sh

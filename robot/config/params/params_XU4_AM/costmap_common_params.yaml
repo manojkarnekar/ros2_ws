@@ -1,0 +1,37 @@
+obstacle_range: 10 #4
+max_obstacle_height: 2.0
+raytrace_range: 8 #8
+#footprint: [[-0.58, -0.25], [-0.58, 0.25], [0.12, 0.25], [0.12, -0.25]]
+#footprint: [[-0.47, -0.25], [-0.47, 0.25], [0.23, 0.25], [0.23, -0.25]]
+footprint: [[-0.35, -0.25], [-0.35, 0.25], [0.35, 0.25], [0.35, -0.25]]
+footprint_padding: 0.01
+observation_sources: laser_scan_sensor 
+map_type: costmap
+footprint_clearing_enabled: true
+laser_scan_sensor: {sensor_frame: laser, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+always_send_full_costmap: true
+cost_factor: 0.55
+neutral_cost: 66
+lethal_cost: 250
+
+
+#inflation_layer: {inflation_radius: 3.5,cost_scaling_factor: 1.5 } 
+#obstacle_layer:
+#  observation_sources: laser_scan_sensor
+#  obstacle_range: 3.0
+#  raytrace_range: 8
+#  laser_scan_sensor: {sensor_frame: laser, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+
+
+#static_layer: {enabled: true}
+
+#plugins:
+# - {name: costmap_prohibition_layer,type: costmap_prohibition_layer_namespace::CostmapProhibitionLayer"}
+#- {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
+#- {name: static_layer, type: "costmap_2d::StaticLayer"}
+#- {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+
+
+
+#- {name: range_layer,   type: "range_sensor_layer::RangeSensorLayer"}
+#range_layer: {enabled: true, topics: [/sonar_6, /sonar_7, /sonar_8],  no_readings_timeout: 5.0, clear_on_max_reading: true, clear_threshold: 0.3, mark_threshold: 0.9} 

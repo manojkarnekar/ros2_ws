@@ -1,0 +1,16 @@
+core0_control:
+  ros__parameters:
+    use_sim_time: False
+    K: 270.56
+    w: 0.472
+
+core0_odom:
+  ros__parameters:
+    use_sim_time: False
+    odom_tf_pub: True
+    ticks_meter: 660.0
+    base_width: 0.465
+    rate: 10.0
+
+
+

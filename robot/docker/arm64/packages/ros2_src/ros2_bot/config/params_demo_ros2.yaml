@@ -1,0 +1,25 @@
+# if a namespace is specified
+# ns_name: 
+# node name
+yaml_params_ros2: 
+  ros__parameters:
+    # int
+    param0: 2
+    # double
+    param1: 0.2
+    # string
+    param2: "R2-D2"
+    # nested parameters
+    param3: 
+      weight: 2
+      name: "wood"
+    # boolean
+    param4: true
+    # boolean array
+    param5: [true, true, true]
+    # interger array
+    param6: [5,6,7,8]
+    # double array
+    param7: [0.2, 0.3, 0.4, 0.5]
+    # string array
+    param8: ["Bedroom", "Bathroom", "Laundry room", "Kitchen", "Living room"]

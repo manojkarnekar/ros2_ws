@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export TICKS_METER=23468
+export MOTOR_DIRECTION=1
+export ENCODER_DIRECTION=-1
+export TWIST_FACTOR=728

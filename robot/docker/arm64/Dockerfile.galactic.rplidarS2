@@ -1,0 +1,16 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV SHELL /bin/bash
+SHELL ["/bin/bash", "-c"]
+
+ENV ROS_WS /ros2_ws
+RUN mkdir -p ${ROS_WS}/src
+
+
+RUN bash -c "cd ${ROS_WS}/src/ \
+&& git clone https://debanik-at-153479249734:sXT9ByfqLYjNZLzEBZ5JnE0mcXDhT0LqIRDj8XI2IaU=@git-codecommit.us-east-2.amazonaws.com/v1/repos/sllidar_ros2 \
+&& cd ${ROS_WS}\
+&& rosdep install --from-paths src --ignore-src -y\
+&& . /opt/ros/$ROS_DISTRO/setup.bash \
+&& colcon build --symlink-install"

@@ -1,0 +1,15 @@
+# Ignore everything
+/*
+/*/
+
+# But not these files & folders...
+!.gitignore
+!/CMakeLists.txt
+!/config
+!/launch
+!/maps
+!/package.xml
+!/params
+!/scripts
+!/src
+!/urdf

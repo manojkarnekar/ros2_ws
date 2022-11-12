@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export TICKS_METER=2352
+export MOTOR_DIRECTION=1
+export TWIST_FACTOR=400
+export BASE_WIDTH=0.370

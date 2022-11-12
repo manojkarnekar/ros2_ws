@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<robot name="jetbrain_core0" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find core0_cpp_robot)/urdf/jetbrain_core0_materials.xacro" />
+<xacro:include filename="$(find core0_cpp_robot)/urdf/jetbrain_core0_gazebo_plugin.urdf.xacro" />
+<xacro:include filename="$(find core0_cpp_robot)/urdf/jetbrain_core0_link_joint.urdf.xacro" />
+</robot>

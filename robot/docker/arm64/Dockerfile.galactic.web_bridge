@@ -1,0 +1,25 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV SHELL /bin/bash
+
+SHELL ["/bin/bash", "-c"]
+RUN mkdir -p /server
+COPY ./packages/server /server
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+ros-galactic-rosbridge-server \
+&& curl -sL https://deb.nodesource.com/setup_16.x | sudo bash - \
+&& cat /etc/apt/sources.list.d/nodesource.list \
+&& sudo apt -y install nodejs \
+&& node  -v \
+&& git clone https://github.com/RobotWebTools/ros2-web-bridge.git \
+&& cd ros2-web-bridge \
+&& source /opt/ros/galactic/setup.sh \
+&& npm install \
+&& npm install -g npm \
+&& cd \
+&& cd /server/ \
+&& npm i
+
+

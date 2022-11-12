@@ -1,0 +1,10 @@
+# Ignore everything
+/*
+/*/
+
+# But not these files & folders...
+!.gitignore
+!/core0_cpp_robot
+!/teb_local_planner
+!/costmap_converter
+!/pointcloud_to_laserscan

@@ -1,0 +1,16 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+
+ENV ROS_WS /ros2_control_ws
+RUN mkdir -p ${ROS_WS}/src
+# COPY ./packages/ros2_src/ros2_bot ${ROS_WS}/src
+COPY ./packages/ros2_src/control ${ROS_WS}/src/control
+COPY ./packages/ros2_src/imu_raw ${ROS_WS}/src/imu_raw
+COPY ./packages/ros2_src/odometry ${ROS_WS}/src/odometry
+COPY ./packages/ros2_src/base_launch ${ROS_WS}/src/base_launch
+
+RUN bash -c 'apt-get update \
+&& apt-get install -y --no-install-recommends ros-galactic-tf2* \
+ros-galactic-nav-msgs \
+&& cd ${ROS_WS}\
+&& source /opt/ros/galactic/setup.bash\
+&& colcon build --symlink-install'

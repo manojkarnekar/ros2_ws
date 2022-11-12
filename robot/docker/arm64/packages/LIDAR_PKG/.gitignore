@@ -4,7 +4,6 @@
 
 # But not these files & folders...
 !.gitignore
-!/collision_monitor
-# !/librealsense
-!/opencv
-!/robot
+!/ls01b_ros2  
+!/lsm10_ros2  
+!/rplidar_ros

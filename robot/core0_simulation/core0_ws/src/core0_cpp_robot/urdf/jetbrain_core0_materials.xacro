@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="jetbrain_core0">
+<material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.203125 0.23828125 0.28515625 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>  
+<!-- Link Properties -->
+  <gazebo reference="left_drive_wheel_link">
+    <mu1 value="10.0" />
+    <mu2 value="10.0" />
+    <maxVel>0.5</maxVel>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="right_drive_wheel_link">
+    <mu1 value="10" />
+    <mu2 value="10" />
+    <maxVel>0.5</maxVel>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="base_link">
+    <mu1 value="0" />
+    <mu2 value="0" />
+    <material>Gazebo/Turquoise</material>
+  </gazebo>
+
+  <gazebo reference="right_front_castor_link">
+    <mu1 value="0" />
+    <mu2 value="0" />
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <gazebo reference="left_front_castor_link">
+    <mu1 value="0" />
+    <mu2 value="0" />
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <gazebo reference="right_rear_castor_link">
+    <mu1 value="0" />
+    <mu2 value="0" />
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <gazebo reference="left_rear_castor_link">
+    <mu1 value="0" />
+    <mu2 value="0" />
+    <material>Gazebo/Orange</material>
+  </gazebo>
+</robot>

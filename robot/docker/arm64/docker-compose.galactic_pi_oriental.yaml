@@ -1,0 +1,120 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+
+services:
+  # micros docekr image build    
+  sar_ros2_microros_run_pi_oriental:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:foxy_arm64_micro_ros 
+      # build:
+      #   context: .
+      #   dockerfile: Dockerfile.ros2.micro_ros
+      environment:
+        - "ROS_DOMAIN_ID=1"
+      command: bash -c "source /uros_ws/install/local_setup.sh && ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/arduino -b 460800"
+      devices:
+        - /dev/arduino
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  # ros2 rplidarS2 node file for rplidar node running in ros2 dock wsp
+  sar_ros2_rplidarS2_run_pi_oriental:
+     image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.rplidarS2
+     # build:
+     #   context: .
+     #   dockerfile: Dockerfile.ros2.rp_lidar
+     environment:
+       - "ROS_DOMAIN_ID=1"
+     command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch sllidar_ros2 sllidar_s2_launch.py"
+     devices:
+       - /dev/rplidars2
+     tty: true
+     privileged: false
+     network_mode: host
+     ipc: host
+     restart: unless-stopped
+  
+  # ros2 basic control without_us_run
+  sar_ros2_base_control_pi_oriental:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.base_control
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.base_control
+      environment:
+        - "ROS_DOMAIN_ID=1"
+      command: bash -c 'source /opt/ros/galactic/setup.bash && source /ros2_control_ws/install/setup.bash && ros2 launch base_launch ros2_base_control_pi.launch.py model:=./urdf/core0_2022_model.urdf params_file:=./config/sar_bot_oriental.yaml'
+      volumes:
+        - $PWD/packages/ros2_src/base_launch/config:/config
+        - $PWD/packages/ros2_src/base_launch/urdf:/urdf
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  # robot localization with extended kalman filer node container
+  sar_ros2_ekf_run_pi_oriental:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+      environment:
+        - "ROS_DOMAIN_ID=1"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 run robot_localization ekf_node --ros-args --param use_sim_time:=false --params-file ./config/ekf.yaml"
+      volumes:
+        - $PWD/packages/ros2_src/base_launch/config:/config
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+
+  #robot navigation and slam tool box package build using ros2 docker for nvc
+  sar_ros2_nav2_tune_pi_oriental:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+      build:
+        context: .
+        dockerfile: Dockerfile.galactic
+      environment:
+        - "ROS_DOMAIN_ID=1"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 launch nav2_bringup bringup_launch.py map:=/maps/offline_map.yaml params_file:=/params/nav2_params.yaml slam:=False autostart:=True use_sim_time:=False"   #slam toolbox
+      volumes:
+        - $PWD/packages/ros2_src/base_launch/params:/params
+        - $PWD/packages/ros2_src/base_launch/maps:/maps
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  #robot ros2 web server for nvc
+  sar_ros2_web_server_pi_zd:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.web_bridge
+      build:
+        context: .
+        dockerfile: Dockerfile.galactic.web_bridge
+      environment:
+        - "ROS_DOMAIN_ID=1"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  # sar nodejs
+  sar_ros2_nodeJs_pi_zd:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.web_bridge
+      build:
+        context: .
+        dockerfile: Dockerfile.galactic.web_bridge
+      environment:
+        - "ROS_DOMAIN_ID=1"
+      command: bash -c "source /opt/ros/galactic/setup.bash && node server/server.js"
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped

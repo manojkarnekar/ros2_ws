@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot
+  name="afs">
+  <link name="base_footprint">
+  </link>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.382503620264089 -0.00481216361634833 0.596085689511122"
+        rpy="0 0 0" />
+      <mass
+        value="488.353730242538" />
+      <inertia
+        ixx="43.4728149341465"
+        ixy="0.497630709846705"
+        ixz="-5.99241814145946"
+        iyy="35.2333493925696"
+        iyz="-0.507672720310212"
+        izz="55.9930949558306" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="footprint_joint" type="fixed">
+    <origin xyz="0.42626 0 0.15" rpy="0 0 0" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
+  <link
+    name="left_support_wheel_link">
+    <inertial>
+      <origin
+        xyz="-7.95541965636914E-11 0.00372660158092403 3.13902376314346E-11"
+        rpy="0 0 0" />
+      <mass
+        value="3.42380230800226" />
+      <inertia
+        ixx="0.0252581475067776"
+        ixy="-1.4225392640157E-12"
+        ixz="3.60661424206014E-11"
+        iyy="0.0470268384939948"
+        iyz="-3.00951909150189E-11"
+        izz="0.0252581475053613" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/left_support_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/left_support_wheel_link.STL" />
+      </geometry>
+      <!-- <surface>
+        <friction>
+          <ode>
+            <mu>0.3</mu>
+            <mu2>100</mu2>
+          </ode>
+        </friction>
+      </surface> -->
+    </collision>
+  </link>
+  <joint
+    name="left_support_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.42626 0.38392 0.023"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_support_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="right_support_wheel_link">
+    <inertial>
+      <origin
+        xyz="1.7445878075506E-11 -0.00372660158092403 -8.37249436447252E-11"
+        rpy="0 0 0" />
+      <mass
+        value="3.42380230800226" />
+      <inertia
+        ixx="0.0252581475174561"
+        ixy="2.99007178814837E-11"
+        ixz="3.42288285571938E-11"
+        iyy="0.0470268384939948"
+        iyz="-3.7010714408341E-12"
+        izz="0.0252581474946828" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/right_support_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/right_support_wheel_link.STL" />
+      </geometry>
+      <!-- <surface>
+        <friction>
+          <ode>
+            <mu>0.3</mu>
+            <mu2>100</mu2>
+          </ode>
+        </friction>
+      </surface> -->
+    </collision>
+  </link>
+  <joint
+    name="right_support_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.42626 -0.38608 0.023"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_support_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="steer_link">
+    <inertial>
+      <origin
+        xyz="2.25869213482666E-06 -0.0246150313818429 -0.138979576383281"
+        rpy="0 0 0" />
+      <mass
+        value="9.76668027836925" />
+      <inertia
+        ixx="0.082217004682041"
+        ixy="1.7766896193754E-07"
+        ixz="-2.20589348285055E-06"
+        iyy="0.0609803336537807"
+        iyz="-0.0028895673569242"
+        izz="0.0756778496281458" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/drive_motor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.525490196078431 0.933333333333333 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/drive_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="steer_joint"
+    type="revolute">
+    <origin
+      xyz="0.46544 0 0.1465"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="steer_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="1.0"
+      velocity="1.0" />
+  </joint>
+  <link
+    name="drive_wheel_link">
+    <inertial>
+      <origin
+        xyz="0 1.33731272135625E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.05365983277998" />
+      <inertia
+        ixx="0.0185073217715431"
+        ixy="7.61978430287775E-17"
+        ixz="-3.0041435195952E-19"
+        iyy="0.0326907397214542"
+        iyz="9.05521691233532E-19"
+        izz="0.0185073217715431" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/drive_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/drive_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="drive_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 -0.1465"
+      rpy="0 0 0" />
+    <parent
+      link="steer_link" />
+    <child
+      link="drive_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  
+  <link
+    name="laser_link">
+    <inertial>
+      <origin
+        xyz="-0.0465533346082587 6.84789668790416E-05 -0.0227036379253085"
+        rpy="0 0 0" />
+      <mass
+        value="0.000741561906804427" />
+      <inertia
+        ixx="7.26544565793577E-09"
+        ixy="-2.14231019644502E-11"
+        ixz="1.24161938409562E-10"
+        iyy="5.73102559896731E-09"
+        iyz="-1.74693459382659E-11"
+        izz="9.15454516196176E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://core0_model/meshes/laser_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.749019607843137 0.749019607843137 0.749019607843137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://core0_model/meshes/laser_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="laser_joint"
+    type="fixed">
+    <origin
+      xyz="0.78546 -0.00091907 0.3556"
+      rpy="0 0 3.141" />
+    <parent
+      link="base_link" />
+    <child
+      link="laser_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <link
+    name="pal">
+    <inertial>
+      <origin
+        xyz="-0.00852270343786155 0.072303289904977 1.54729596049713E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.61118" />
+      <inertia
+        ixx="0.00073089"
+        ixy="6.9777E-21"
+        ixz="2.8195E-26"
+        iyy="0.00067219"
+        iyz="3.0805E-09"
+        izz="0.00073089" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/pal.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://afs_model/meshes/pal.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pal_joint"
+    type="fixed">
+    <origin
+      xyz="0.78044 0 1.22"
+      rpy="0 0 1.57" />
+    <parent
+      link="base_link" />
+    <child
+      link="pal" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <link
+    name="imu_link">
+    <inertial>
+      <origin
+        xyz="0.0213984188401533 -0.074075095306316 0.000252651599778594"
+        rpy="0 0 0" />
+      <mass
+        value="0.0463142904007005" />
+      <inertia
+        ixx="9.57326055273082E-05"
+        ixy="2.01017165455901E-07"
+        ixz="6.37351216926088E-10"
+        iyy="2.05445331478613E-05"
+        iyz="-6.0696313943982E-10"
+        izz="0.000115933354817533" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://core0_model/meshes/imu_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.968627450980392 0.87843137254902 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://core0_model/meshes/imu_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="imu_joint"
+    type="fixed">
+    <origin
+      xyz="0.51 0.08 0.73"
+      rpy="0 0 0" />
+    <parent
+      link="base_footprint" />
+    <child
+      link="imu_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+</robot>

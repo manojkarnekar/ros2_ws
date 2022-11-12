@@ -1,0 +1,25 @@
+# Ignore everything
+/*
+/*/
+
+# But not these files & folders...
+!.gitignore
+!/imu_tools
+!/ros2_bot
+!/pointcloud_to_laserscan
+!/micvision
+!/follow_waypoints
+!/control
+!/odometry
+!/imu_raw
+!/mic_vision
+!/nav2_goal_pose
+!/base_launch
+!/teach_and_repeat
+!/zed2_pointcloud_to_laserscan
+!/cv_zed_ros2
+!/qr_code_follow
+!/realsense_pc
+!/follow_me_rs
+!/cmd_vel_qr
+!/cv_localization

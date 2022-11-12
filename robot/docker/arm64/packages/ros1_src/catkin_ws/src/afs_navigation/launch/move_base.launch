@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
+    <rosparam file="$(find afs_navigation)/config/costmap_common_params.yaml"
+    command="load" ns="global_costmap" />
+    <rosparam file="$(find afs_navigation)/config/costmap_common_params.yaml"
+    command="load" ns="local_costmap" />
+    <rosparam file="$(find afs_navigation)/config/local_costmap_params.yaml"
+    command="load" />
+    <rosparam file="$(find afs_navigation)/config/global_costmap_params.yaml"
+    command="load" />
+    <rosparam file="$(find afs_navigation)/config/base_local_planner_params.yaml"
+    command="load" />
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <!--param name="base_global_planner" value="carrot_planner/CarrotPlanner" /-->
+    <param name="controller_frequency" value="10.0" />
+  </node>
+
+</launch>
