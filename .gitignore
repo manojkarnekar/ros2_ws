@@ -1,0 +1,9 @@
+# Ignore everything
+/*
+/*/
+
+# But not these files & folders...
+!.gitignore
+!/collision_monitor
+# !/librealsense
+!/opencv
