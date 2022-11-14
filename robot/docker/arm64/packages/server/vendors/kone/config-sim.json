@@ -1,0 +1,14 @@
+{
+    "KONE_AUTH_TOKEN_URL": "https://dev.kone.com/api/v2/oauth2/token",
+    "KONE_WEB_SOCKET_URL": "wss://dev.kone.com/stream-v2?accessToken=",
+
+    "CLIENT_ID": "2dfaa70e-98dc-4282-adeb-ef16a4831e72",
+    "CLIENT_SECRET": "2724588a7be311505dbca6d2d6fa6f2ebfd3c78e4df12fff7e634b85c033129e",
+    "DEFAULT_BUILDING_ID": "fWlfHyPlaca",
+    "DEFAULT_BUILDING_GROUP_ID": "1",
+    "DEFAULT_TERMINAL": "1",
+    
+    "FORCE_ALLOWED_LIFT": [],
+    "DEFAULT_TEST_SRC_ID": "2000",
+    "DEFAULT_TEST_DEST_ID": "8000"
+}

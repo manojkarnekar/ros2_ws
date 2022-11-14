@@ -1,0 +1,54 @@
+{
+    "PoseWithCovarianceStamped": {
+        "header": {
+            "frame_id": "map"
+        },
+        "pose": {
+            "pose": {
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "orientation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                }
+            },
+            "covariance": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+    },
+    "GoalID": {
+        "stamp": {
+            "secs": 0,
+            "nsecs": 0
+        },
+        "id": ""
+    },
+    "subscribers": {
+        "mapListener": {
+            "name": "/map",
+            "messageType": "nav_msgs/OccupancyGrid"
+        },
+        "poseListener": {
+            "name": "/amcl_pose",
+            "messageType": "geometry_msgs/PoseWithCovarianceStamped"
+        }
+    },
+    "publishers": {
+        "initPose": {
+            "name": "/initialpose",
+            "messageType": "geometry_msgs/PoseWithCovarianceStamped"
+        },
+        "battery": {
+            "name": "/battery",
+            "messageType": "std_msgs/Int16"
+        },
+        "move_base_cancel": {
+            "name": "move_base/cancel",
+            "messageType": "actionlib_msgs/GoalID"
+        }
+    }
+}

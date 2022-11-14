@@ -1,0 +1,31 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:utility
+
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+ENV ROS_WS /slam_ws
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+	apt-utils \
+	libasio-dev \
+  	libtinyxml2-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+
+RUN mkdir -p ${ROS_WS}/src && \
+cd ${ROS_WS}/src && \
+git clone -b foxy-devel https://github.com/quentingllmt/slam_toolbox.git
+
+RUN cd ${ROS_WS} && \
+source /opt/ros/foxy/install/setup.bash && \
+source /rviz2_ws/install/setup.bash && \
+source /gazebo2_ws/install/setup.bash && \
+source /utility_ws/install/setup.bash && \
+apt-get update && \
+rosdep update && \
+rosdep install -y -r --from-paths src --ignore-src --rosdistro=foxy -y && \
+colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+

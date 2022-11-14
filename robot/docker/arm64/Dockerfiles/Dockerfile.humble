@@ -1,0 +1,21 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:humble_base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-teleop-twist-keyboard \
+    ros-humble-joint-state-publisher  \
+    ros-humble-robot-state-publisher  \
+    ros-humble-slam-toolbox  \
+    ros-humble-navigation2  \
+    ros-humble-nav2-bringup  \
+    ros-humble-tf-transformations  \
+    ros-humble-robot-localization \
+    ros-humble-turtlebot3-.* && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+RUN bash -c "git clone https://github.com/BehaviorTree/BehaviorTree.CPP.git \
+&& cd BehaviorTree.CPP/ \
+&& mkdir build; cd build \
+&& cmake ..\
+&& make \
+&& make install"

@@ -1,0 +1,35 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+services:
+  # zed run on Xivir sar galactic
+  sar_galactic_zed_run_NX:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed2_galactic_NX
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source zed2_ws/install/setup.bash && ros2 launch zed_wrapper zed2.launch.py"
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+  
+  sar_galactic_pcl_to_scan:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.zed2_p2l
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source cloud_ws/install/setup.bash && ros2 launch pointcloud_to_laserscan core0_pointcloud_laserscan.launch.py"
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always

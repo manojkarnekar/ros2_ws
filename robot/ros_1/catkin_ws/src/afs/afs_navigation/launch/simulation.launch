@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <include file="$(find afs_model)/launch/gazebo.launch" />
+
+  <include file="$(find afs_model)/launch/controllers.launch" />
+
+  <include file="$(find afs_model)/launch/display.launch" />
+
+  <include file="$(find afs_navigation)/launch/navigation.launch" />
+
+</launch>

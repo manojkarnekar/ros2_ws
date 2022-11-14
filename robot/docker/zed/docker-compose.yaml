@@ -1,0 +1,11 @@
+# for ZED2
+
+version: "2.3"
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    tty: true # true=hangs container for debugging

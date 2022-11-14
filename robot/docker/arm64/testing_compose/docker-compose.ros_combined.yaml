@@ -1,0 +1,78 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+
+services:
+  ros_melodic:
+    image: melodic-jetson:1
+    build:
+      context: .
+      dockerfile: Dockerfile.melodic.jetson
+    environment:
+      - "ROS_IP=192.168.10.201"
+      - "ROS_MASTER_URI=http://192.168.10.201:11311"
+      - "ROS_DOMAIN_ID=32"
+    devices:
+      - /dev/arduino
+      - /dev/imu
+    tty: true
+    privileged: false
+    command: bash -c "source /catkin_ws/devel/setup.bash && roslaunch ros1_bot ros1_bot.launch"
+    network_mode: host
+    ipc: host
+    restart: on-failure
+
+  ros1_bridge:
+    image: foxy-ros1-bridge:1
+    build:
+      context: .
+      dockerfile: Dockerfile.ros1_bridge.jetson
+    depends_on:
+      - ros_melodic
+    environment:
+      - "ROS_IP=192.168.10.201"
+      - "ROS_MASTER_URI=http://192.168.10.201:11311"
+      - "ROS_DOMAIN_ID=32"
+    command: bash -c "source /opt/ros/noetic/setup.bash && source /opt/ros/foxy/setup.bash && ros2 run ros1_bridge dynamic_bridge"
+    network_mode: host
+    ipc: host
+    restart: always
+
+  ros_foxy_mapping:
+    image: foxy-jetson:1
+    build:
+      context: .
+      dockerfile: Dockerfile.foxy.jetson
+    depends_on:
+      - ros1_bridge
+    environment:
+      - "ROS_DOMAIN_ID=32"
+    command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch ros2_bot ros2_mapping.launch.py"
+    devices:
+      - /dev/rplidar
+    tty: true
+    privileged: false
+    network_mode: host
+    ipc: host
+    restart: unless-stopped
+  
+  ros_foxy_navigation:
+    image: foxy-jetson:1
+    build:
+      context: .
+      dockerfile: Dockerfile.foxy.jetson
+    depends_on:
+      - ros1_bridge
+    environment:
+      - "ROS_DOMAIN_ID=32"
+    command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch ros2_bot ros2_navigation.launch.py"
+    devices:
+      - /dev/rplidar
+    tty: true
+    privileged: false
+    network_mode: host
+    ipc: host
+    restart: unless-stopped
+    

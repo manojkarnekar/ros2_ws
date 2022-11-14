@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="afs">
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<!-- <robotNamespace>afs</robotNamespace> -->
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+		</plugin>
+	</gazebo>
+
+	<!-- Drive controller -->
+	<gazebo>
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<alwaysOn>true</alwaysOn>
+			<legacyMode>false</legacyMode>
+			<updateRate>50</updateRate>
+			<leftJoint>left_support_wheel_joint</leftJoint>
+			<rightJoint>right_support_wheel_joint</rightJoint>
+			<wheelSeparation>0.77</wheelSeparation>
+			<wheelDiameter>0.3</wheelDiameter>
+			<commandTopic>diff_twist</commandTopic>
+			<odometryTopic>diff_odom</odometryTopic>
+			<odometryFrame>odom</odometryFrame>
+			<odometrySource>encoder</odometrySource>
+			<publishOdomTF>false</publishOdomTF>
+			<publishTf>true</publishTf>
+			<broadcastTF>false</broadcastTF>
+			<rosDebugLevel>na</rosDebugLevel>
+			<wheelAcceleration>1.8</wheelAcceleration>
+			<wheelTorque>30</wheelTorque>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<publishWheelTF>false</publishWheelTF>
+			<publishWheelJointState>true</publishWheelJointState>
+		</plugin>
+	</gazebo>
+
+  <!-- 2D Lidar-->
+  <gazebo reference="lidar_link">
+    <sensor type="ray" name="lidar_sensor">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>false</visualize>
+    <update_rate>15</update_rate>
+    <ray>
+	    <scan>
+	    	<horizontal>
+		    	<samples>720</samples>
+			    <resolution>0.5</resolution>
+			    <min_angle>1.50</min_angle>
+			    <max_angle>4.783185</max_angle>
+		    </horizontal>
+	    </scan>
+	    <range>
+		    <min>0.25</min>
+		    <max>15.0</max>
+		    <resolution>0.01</resolution>
+	    </range>
+	    <noise>
+		    <type>gaussian</type>
+		    <mean>0.0</mean>
+		    <stddev>0.01</stddev>
+	    </noise>
+    </ray>
+    <plugin name="lidar_controller" filename="libgazebo_ros_laser.so">
+	    <topicName>scan</topicName>
+	    <frameName>lidar_link</frameName>
+    </plugin>
+    </sensor>
+  </gazebo>
+
+    <!--Steer Joint Transmission-->
+    <transmission name="steer_joint_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="steer_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="steer_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <!-- Drive Wheel Joint Transmission-->
+    <transmission name="drive_joint_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="drive_wheel_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="drive_motor">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+		<!-- Support Wheel Transmissions -->
+
+    <!-- <transmission name="right_support_wheel_joint_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="right_support_wheel_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="right_support_wheel_joint_act">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="left_support_wheel_joint_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="left_support_wheel_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="left_support_wheel_joint_act">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission> -->
+
+    <!-- Link Properties-->
+    <gazebo reference="base_link">
+        <mu1 value="0"/>
+        <mu2 value="0"/>
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <gazebo reference="lidar_link">
+        <mu1 value="0"/>
+        <mu2 value="0"/>
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="pal_link">
+        <mu1 value="0"/>
+        <mu2 value="0"/>
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="drive_wheel_link">
+        <mu1 value="10"/>
+        <mu2 value="10"/>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="steer_link">
+        <mu1 value="0.1"/>
+        <mu2 value="0.1"/>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="left_support_wheel_link">
+				<mu1 value="0.5"/>
+				<mu2 value="0.5"/>
+        <!-- <fdir1>1 0 0</fdir1> -->
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="right_support_wheel_link">
+        <mu1 value="0.5"/>
+        <mu2 value="0.5"/>
+        <!-- <fdir1>1 0 0</fdir1> -->
+        <material>Gazebo/White</material>
+    </gazebo>
+</robot>

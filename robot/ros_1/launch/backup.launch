@@ -1,0 +1,114 @@
+<?xml version="1.0"?> <launch>
+  <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="odom_topic" default="odom" />
+  <arg name="move_forward_only" default="true"/>
+
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+  <!--param name="use_sim_time" value="true"/-->
+
+<!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+	<!--param name="robot_description" command="$(find xacro)/xacro.py '$(find model_description)/urdf/core_0.xacro'" /-->
+        <param name="robot_description" command="$(find xacro)/xacro.py '$(find amro_urdf)/urdf/amro.xacro'" />
+  	
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="False"/>
+  </node>
+
+
+  <!--Robot State Publisher-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+   <!--Map Sever-->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find model_bringup)/maps/signature_b.yaml"/>
+
+    <!-- Place map frame at odometry frame -->
+  <!--node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0.185 0 -0.317 0 0 3.14 base_footprint laser 100" />
+  <node pkg="tf" type="static_transform_publisher" name="map_foot_broadcaster" args="0 0 0 0 0 0 map base_footprint 100" />
+  <node pkg="tf" type="static_transform_publisher" name="foot_base_broadcaster" args="0 0 0.625 0 0 0 base_footprint base_link 100" />
+  <node pkg="tf" type="static_transform_publisher" name="odom_foot_broadcaster" args="0 0 0 0 0 0 odom base_footprint 100" /-->
+   <!--AMCL-->
+
+  <include file="$(find model_bringup)/params/amcl.launch.xml"/>
+  <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+  <!--node name="self_localize_1" pkg="model_control" type="self_localize_1.py" output="screen"/-->
+  <node name="micvision_localization_node" pkg="micvision" type="micvision_localization_node" output="screen"/>
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+    <param name="port" value="/dev/arduino"/>
+    <param name="baud" value="115200"/>
+  </node>
+ 
+  <!--node pkg="rplidar_ros" type="rplidar.launch" name="rplidar" output="screen"/-->
+
+
+    <!--Move base-->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <!--param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" /-->
+  
+    <!--<rosparam file="$(find model_bringup)/params/base_local_planner_params.yaml" command="load" />-->
+    <rosparam file="$(find model_bringup)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find model_bringup)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find model_bringup)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find model_bringup)/params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find model_bringup)/params/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find model_bringup)/params/move_base_params.yaml" command="load" />
+    <rosparam file="$(find model_bringup)/params/plugin.yaml" command="load" />
+
+    <!--rosparam file="$(find model_bringup)/params/costmap_converter_params.yaml" command="load" /-->
+    <!--rosparam file="$(find model_bringup)/params/costmap_converter_params.yaml" command="load" /-->
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+    <!--param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" /-->
+  </node>
+  
+  <!-- convert provide equal cmd_vel to both motors-->
+  <node pkg="model_control" type="test.py" name="twist_motor" output="screen">
+      <!--rosparam param="K">-120</rosparam-->
+      <rosparam param="K">542</rosparam>
+  </node>
+  <!-- Publish Odom and Broadcast TF-->
+  <node pkg="model_control" type="diff_tf.py" name="diff_tf" output="screen">
+      <!--rosparam param="ticks_meter">955</rosparam-->
+      <!--rosparam param="K">-1</rosparam-->
+      <rosparam param="ticks_meter">3185</rosparam>
+      <rosparam param="K">1</rosparam>
+  </node>
+  <!-- PID control and generate PWM for motors-->
+  <!--node pkg="model_control" type="barcode.py" name="barcode" output="screen"/--> 
+  
+  <!--node name="lpid_velocity" pkg="model_control" type="lpid_velocity.py" output="screen">
+      <remap from="wheel" to="lwheel_encoder"/>
+      <remap from="motor_cmd" to="lmotor_cmd"/>
+      <remap from="wheel_vtarget" to="lwheel_vtarget"/>
+      <remap from="wheel_vel" to="lwheel_vel"/>
+      <rosparam param="Kp">400</rosparam>
+      <rosparam param="Ki">100</rosparam>
+      <rosparam param="Kd">0</rosparam>
+      <rosparam param="out_min">-255</rosparam>
+      <rosparam param="out_max">255</rosparam>
+      <rosparam param="rate">50</rosparam>
+      <rosparam param="timeout_ticks">100</rosparam>
+      <rosparam param="rolling_pts">10</rosparam>
+  </node-->
+
+  <!--node name="rpid_velocity" pkg="model_control" type="rpid_velocity.py" output="screen">
+      <remap from="wheel" to="rwheel_encoder"/>
+      <remap from="motor_cmd" to="rmotor_cmd"/>
+      <remap from="wheel_vtarget" to="rwheel_vtarget"/>
+      <remap from="wheel_vel" to="rwheel_vel"/>
+      <rosparam param="Kp">400</rosparam>
+      <rosparam param="Ki">100</rosparam>
+      <rosparam param="Kd">0</rosparam>
+      <rosparam param="out_min">-255</rosparam>
+      <rosparam param="out_max">255</rosparam>
+      <rosparam param="rate">50</rosparam>
+      <rosparam param="timeout_ticks">100</rosparam>
+      <rosparam param="rolling_pts">10</rosparam>
+  </node-->
+
+  <node name="sonar" pkg="model_control" type="sonar.py" output="screen"/>
+</launch>
+
+

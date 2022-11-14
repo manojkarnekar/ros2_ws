@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+
+import rospy
+import time
+from geometry_msgs.msg import Twist
+
+rospy.init_node('teleop_twist_keyboard')
+pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)
+#r = rospy.Rate(3)
+twist = Twist()
+speed = 1.13
+turn = 0.5
+
+#Forward movement
+twist.linear.x = 1 * speed
+twist.linear.y = 0
+twist.linear.z = 0
+twist.angular.x = 0
+twist.angular.y = 0
+twist.angular.z = 0
+
+# Publish.
+pub.publish(twist)
+r.sleep()
+
+# Publish stop message when thread exits.
+twist.linear.x = 0
+twist.linear.y = 0
+twist.linear.z = 0
+twist.angular.x = 0
+twist.angular.y = 0
+twist.angular.z = 0
+
+# Publish.
+pub.publish(twist)
+r.sleep()
+
+#Backward movement
+twist.linear.x = -1 * speed
+twist.linear.y = 0
+twist.linear.z = 0
+twist.angular.x = 0
+twist.angular.y = 0
+twist.angular.z = 0
+
+# Publish.
+pub.publish(twist)
+r.sleep()
+
+# Publish stop message when thread exits.
+twist.linear.x = 0
+twist.linear.y = 0
+twist.linear.z = 0
+twist.angular.x = 0
+twist.angular.y = 0
+twist.angular.z = 0
+
+# Publish.
+pub.publish(twist)
+r.sleep()

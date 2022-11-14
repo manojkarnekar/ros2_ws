@@ -1,0 +1,5 @@
+/home/dj/sar/docker/arm64/cv_zed/CMakeFiles/rebuild_cache.dir
+/home/dj/sar/docker/arm64/cv_zed/CMakeFiles/edit_cache.dir
+/home/dj/sar/docker/arm64/cv_zed/CMakeFiles/qr_code_video_zed2.dir
+/home/dj/sar/docker/arm64/cv_zed/CMakeFiles/qr_code_video_wc.dir
+/home/dj/sar/docker/arm64/cv_zed/CMakeFiles/qr_code.dir

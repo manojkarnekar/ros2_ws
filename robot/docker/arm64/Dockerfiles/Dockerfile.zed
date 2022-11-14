@@ -1,0 +1,13 @@
+FROM dustynv/ros:foxy-slam-l4t-r32.6.1
+
+ENV ROS_WS /ros2_ws
+
+RUN bash -c "source /opt/ros/foxy/install/setup.bash \
+&& mkdir -p ${ROS_WS}/src \
+&& cd ${ROS_WS}/src \
+&& git clone -b galactic https://github.com/ros-perception/image_common.git \
+&& git clone -b foxy-devel https://github.com/ros-perception/image_transport_plugins.git \
+&& cd .. \
+&& colcon build --symlink-install"
+
+CMD source /ros2_ws/install/setup.bash && ros2 run image_transport republish compressed --ros-args -r in/compressed:=image_compressed -r out:=image_raw

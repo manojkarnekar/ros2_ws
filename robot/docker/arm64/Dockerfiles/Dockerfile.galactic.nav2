@@ -1,0 +1,13 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-galactic-libg2o && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+RUN bash -c "cd ${ROS_WS}\
+&& git clone -b ros2-master https://github.com/rst-tu-dortmund/teb_local_planner.git \
+&& git clone -b ros2 https://github.com/rst-tu-dortmund/costmap_converter.git \
+&& source /opt/ros/galactic/setup.bash\
+&& colcon build --symlink-install"
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="airbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find airbot_model)/urdf/airbot.urdf"/>
+  <xacro:include filename="$(find airbot_model)/urdf/airbot.gazebo"/>
+  <xacro:include filename="$(find airbot_model)/urdf/_d435.urdf.xacro"/>
+
+  <xacro:sensor_d435 name="front_camera" parent="base_link" topics_ns="front_camera" update_rate="15">
+    <origin xyz="0.108 0.0 0.1907" rpy="0 0 0"/>
+  </xacro:sensor_d435>
+
+  <xacro:sensor_d435 name="rear_camera" parent="base_link" topics_ns="rear_camera" update_rate="15">
+    <origin xyz="-0.528 0.0 0.1907" rpy="0 0 3.1415926535897931"/>
+  </xacro:sensor_d435>
+
+</robot>

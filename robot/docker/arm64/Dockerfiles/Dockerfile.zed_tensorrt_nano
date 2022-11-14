@@ -1,0 +1,11 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.zed_jetpack4.6
+
+
+COPY /zed2_tensorrt_yolov5 /zed2_tensorrt_yolov5/
+
+RUN bash -c 'cd zed2_tensorrt_yolov5/build/ \
+&& cmake .. \ 
+&& make'
+
+
+

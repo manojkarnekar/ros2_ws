@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find afs_navigation)/maps/cafe.yaml" output="screen"/>
+
+  <include file="$(find afs_navigation)/launch/micvision.launch" />
+
+  <include file="$(find afs_navigation)/launch/amcl.launch" />
+
+  <include file="$(find afs_navigation)/launch/move_base.launch" />
+
+</launch>

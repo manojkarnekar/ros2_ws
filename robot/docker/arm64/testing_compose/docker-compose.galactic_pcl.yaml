@@ -1,0 +1,161 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+
+services:
+  # micros docekr image build
+  sar_ros2_microros_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_micro_ros 
+      # build:
+      #   context: .
+      #   dockerfile: Dockerfile.ros2.micro_ros
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /uros_ws/install/local_setup.sh && ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/arduino -b 460800"
+      devices:
+        - /dev/arduino
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  # ros2 rplidar node file for rplidar node running in ros2 dock ws
+  # sar_ros2_rplidar_run:
+  #     image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_rp_lidar
+  #     # build:
+  #     #   context: .
+  #     #   dockerfile: Dockerfile.ros2.rp_lidar
+  #     environment:
+  #       - "ROS_DOMAIN_ID=0"
+  #     command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch rplidar_ros rplidar.launch.py"
+  #     devices:
+  #       - /dev/rplidar
+  #     tty: true
+  #     privileged: false
+  #     network_mode: host
+  #     ipc: host
+  #     restart: unless-stopped
+  
+  # ros2 rplidarS2 node file for rplidar node running in ros2 dock ws
+  sar_ros2_rplidarS2_run:
+     image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.rplidarS2
+     # build:
+     #   context: .
+     #   dockerfile: Dockerfile.ros2.rp_lidar
+     environment:
+       - "ROS_DOMAIN_ID=0"
+     command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch sllidar_ros2 sllidar_s2_launch.py"
+     devices:
+       - /dev/rplidars2
+     tty: true
+     privileged: false
+     network_mode: host
+     ipc: host
+     restart: unless-stopped
+  
+  # sar_ros2_rplidar_s2_15hz_run:
+  #     image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.base_control
+  #     build:
+  #       context: .
+  #       dockerfile: Dockerfile.ros2.base_control
+  #     environment:
+  #       - "ROS_DOMAIN_ID=0"
+  #     command: bash -c "source /ros2_control_ws/install/setup.bash && ros2 run ros2_bot lidar_sub_pub"
+  #     tty: true
+  #     privileged: false
+  #     network_mode: host
+  #     ipc: host
+  #     restart: unless-stopped
+  
+  # ros2 basic control(basic hardware control, imu with ahrs filter and odom for differential drive controller calculation docker build file)
+  # sar_ros2_base_control_run:
+  #     image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.base_control
+  #     build:
+  #       context: .
+  #       dockerfile: Dockerfile.ros2.base_control
+  #     environment:
+  #       - "ROS_DOMAIN_ID=0"
+  #     command: bash -c "source /ros2_control_ws/install/setup.bash && ros2 launch ros2_bot ros2_base.launch.py"
+  #     tty: true
+  #     privileged: false
+  #     network_mode: host
+  #     ipc: host
+  #     restart: unless-stopped
+  
+  # ros2 basic control without_us_run
+  sar_ros2_base_control_without_us_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.base_control_without_us
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.base_control
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_control_ws/install/setup.bash && ros2 launch ros2_bot ros2_base.launch.py"
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  #robot urdf publisher container
+  sar_ros2_robot_state_pub_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 run robot_state_publisher robot_state_publisher ./urdf/jetbrain_core0.urdf.xacro"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/urdf:/urdf
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  # robot urdf joint state dynamics publisher runtime
+  sar_ros2_joint_state_pub_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 run joint_state_publisher joint_state_publisher ./urdf/jetbrain_core0.urdf.xacro"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/urdf:/urdf
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  # robot localization with extended kalman filer node container
+  sar_ros2_ekf_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 run robot_localization ekf_node --ros-args --param use_sim_time:=false --params-file ./config/ekf.yaml"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/config:/config
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+
+  #robot navigation and slam tool box package build using ros2 docker for nvc
+  sar_ros2_nav2_tune:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+      build:
+        context: .
+        dockerfile: Dockerfile.galactic
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /opt/ros/galactic/setup.bash && ros2 launch nav2_bringup bringup_launch.py map:=/maps/nav2_map.yaml params_file:=/params/nav2_params_with_pcl.yaml slam:=True autostart:=True"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/params:/params
+        - $PWD/packages/ros2_src/ros2_bot/maps:/maps
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped

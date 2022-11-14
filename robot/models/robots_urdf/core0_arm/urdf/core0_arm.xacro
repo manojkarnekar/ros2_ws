@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="core0_arm" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="arm" default="gen3" />
+  <xacro:arg name="dof" default="7" />
+  <xacro:arg name="vision" default="true" />
+  <xacro:arg name="gripper" default="" />
+  <xacro:arg name="sim" default="false" />
+  <xacro:arg name="prefix" default="arm_" />
+
+  <xacro:include filename="$(find core0_arm)/urdf/core0.urdf" />
+  <xacro:include filename="$(find core0_arm)/urdf/kortex_robot.xacro" />
+
+</robot>

@@ -1,0 +1,99 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+
+services:
+  foxy_microros_run:
+      image: foxy_micro_ros:1
+      build:
+        context: .
+        dockerfile: Dockerfile.foxy.micro_ros
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /microros_ws/install/local_setup.bash && ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/arduino -b 230400 -v6"
+      devices:
+        - /dev/arduino
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  foxy_rplidar_run:
+      image: foxy_rp_lidar:1
+      build:
+        context: .
+        dockerfile: Dockerfile.foxy.rp_lidar
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch rplidar_ros rplidar.launch.py"
+      devices:
+        - /dev/rplidar
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  foxy_ls01_lidar_run:
+      image: foxy_ls01_lidar:1
+      build:
+        context: .
+        dockerfile: Dockerfile.foxy.ls01_lidar
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch ls01b_v2 ls01b_v2_launch.py"
+      devices:
+        - /dev/ls_01_lidar
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+
+  foxy_lsm10_lidar_run:
+      image: foxy_lsm10_lidar:1
+      build:
+        context: .
+        dockerfile: Dockerfile.foxy.lsm10_lidar
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch lsm10_v2 lsm10_v2_launch.py"
+      devices:
+        - /dev/ls_m10_lidar
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: unless-stopped
+  
+  
+  foxy_main_run:
+    image: foxy_main:1
+    build:
+      context: .
+      dockerfile: Dockerfile.foxy.main
+    environment:
+      - "ROS_DOMAIN_ID=0"
+    command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch ros2_bot ros2_mapping.launch.py"
+    tty: true
+    privileged: false
+    network_mode: host
+    ipc: host
+    restart: unless-stopped
+  
+  foxy_Zed_vision_run:
+    image: foxy_zed:1
+    build:
+      context: .
+      dockerfile: Dockerfile.zed.vision
+    environment:
+      - "ROS_DOMAIN_ID=0"
+    command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch zed_wrapper zed2i.launch.py"
+    tty: true
+    privileged: false
+    network_mode: host
+    ipc: host
+    restart: unless-stopped

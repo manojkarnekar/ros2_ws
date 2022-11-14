@@ -1,0 +1,14 @@
+# Publish all joint states
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# Steer Joint Controller
+steer_joint_position_controller:
+  type: position_controllers/JointPositionController
+  joint: steer_joint
+
+# Drive Wheel Joint Controller
+drive_wheel_joint_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: drive_wheel_joint

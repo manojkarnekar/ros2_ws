@@ -1,0 +1,14 @@
+{
+    "KONE_AUTH_TOKEN_URL": "https://dev.kone.com/api/v2/oauth2/token",
+    "KONE_WEB_SOCKET_URL": "wss://dev.kone.com/stream-v2?accessToken=",
+
+    "CLIENT_ID": "7fd43b81-5d8e-476f-86cb-c0dadda093ad",
+    "CLIENT_SECRET": "a9b0160fb2dc16847393048c7dd4419db8b88fc9ef8df680c0a01dfad2b51045",    
+    "DEFAULT_BUILDING_ID": "TuyDv2drk1S",
+    "DEFAULT_BUILDING_GROUP_ID": "1",
+    "DEFAULT_TERMINAL": "10011",
+    
+    "FORCE_ALLOWED_LIFT": [1001020],
+    "DEFAULT_TEST_SRC_ID": "2000",
+    "DEFAULT_TEST_DEST_ID": "8000"
+}

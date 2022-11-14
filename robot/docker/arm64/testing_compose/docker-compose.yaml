@@ -1,0 +1,226 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+
+services:
+  # micros docekr image build
+  sar_ros2_microros_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_micro_ros 
+      # build:
+      #   context: .
+      #   dockerfile: Dockerfile.ros2.micro_ros
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /uros_ws/install/local_setup.sh && ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/arduino -b 460800"
+      devices:
+        - /dev/arduino
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  # ros2 basic control(basic hardware control, imu with ahrs filter and odom for differential drive controller calculation docker build file)
+  sar_ros2_base_control_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_base_control
+      depends_on:
+        - sar_ros2_microros_run
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.base_control
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch ros2_bot ros2_base.launch.py"
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  #robot urdf publisher container
+  sar_ros2_robot_state_pub_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_localization
+      depends_on:
+        - sar_ros2_microros_run
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.localization
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 run robot_state_publisher robot_state_publisher ./urdf/jetbrain_hotbot.urdf.xacro"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/urdf:/urdf
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  # robot urdf joint state dynamics publisher runtime
+  sar_ros2_joint_state_pub_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_localization
+      depends_on:
+        - sar_ros2_microros_run
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.localization
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 run joint_state_publisher joint_state_publisher ./urdf/jetbrain_hotbot.urdf.xacro"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/urdf:/urdf
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  # robot localization with extended kalman filer node container
+  sar_ros2_ekf_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_localization
+      depends_on:
+        - sar_ros2_microros_run
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.localization
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 run robot_localization ekf_node --ros-args --param use_sim_time:=false --params-file ./config/ekf.yaml"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/config:/config
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  # ros2 rplidar node file for rplidar node running in ros2 dock ws
+  sar_ros2_rplidar_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:sar_ros2_rp_lidar
+      depends_on:
+        - sar_ros2_microros_run
+      # build:
+      #   context: .
+      #   dockerfile: Dockerfile.ros2.rp_lidar
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /ros2_ws/install/setup.bash && ros2 launch rplidar_ros rplidar.launch.py"
+      devices:
+        - /dev/rplidar
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  #robot navigation and slam tool box package build using ros2 docker for nvc
+  sar_ros2_nav2_tune:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:nav2_tune
+      depends_on:
+        - sar_ros2_microros_run
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.nav2_tune
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /nav2_tune/install/setup.bash && ros2 launch ros2_bot ros2_navigation.launch.py slam:=True"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/params:/params
+        - $PWD/packages/ros2_src/ros2_bot/maps:/maps
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  # slam toolbox container for building probabilistic map of an environment
+  sar_ros2_slam_toolbox_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:slam_tool_box
+      depends_on:
+        - sar_ros2_microros_run
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.localization
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c "source /slam_ws/install/setup.bash && ros2 run slam_toolbox async_slam_toolbox_node --ros-args --param use_sim_time:=false --params-file ./params/mapper_params.yaml"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/params:/params
+      tty: true
+      privileged: false
+      network_mode: host
+      ipc: host
+      restart: always
+  
+  # zed vision camera pkg build for ros2 vision and navigation and detection 
+  sar_ros2_zed_run:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed_jetpack4.6
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.zed_jetpack4.6
+      command: bash -c "source zed2_ws/install/setup.bash && ros2 launch zed_wrapper zed2.launch.py"
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+  
+  
+
+  # zed vision camera pkg build for Jetson NX ros2 vision and navigation and detection 
+  sar_ros2_zed_run_NX:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed_jetpack_nx_4.6
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      build:
+        context: .
+        dockerfile: Dockerfile.ros2.zed_jetpack4.6
+      command: bash -c "source zed2_ws/install/setup.bash && ros2 launch zed_wrapper zed2.launch.py"
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+  
+  sar_jetson_logger:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:jetson_logger
+      build:
+        context: .
+        dockerfile: Dockerfile.jetson_logger
+      command: bash -c "python3 jetson_logger.py --file jtop_log.csv"
+      volumes:
+        - $PWD/jetson_logger.py:./jetson_logger.py
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+
+
+    
+    

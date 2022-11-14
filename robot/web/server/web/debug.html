@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Jetbrain Debug Page</title>
+    <link href="styles/debug.css" rel="stylesheet">
+</head>
+
+<body>
+    <form>
+        <h3>Jetbrain Debug Page</h3>
+        <input id="localizebtn" type="button" value="Localize Robot" data-api="localize" />
+        <input id="newtripbtn" type="button" value="Start Delivery Screen" data-api="newtrip" />
+        <input id="newtripbtn" type="button" value="Cancel Delivery" data-api="cancel-delivery?pin=123&tripid=1" />
+        <input id="resetbtn" type="button" value="Reset" data-api="shutdown?restart=2" />
+        <input id="restartbtn" type="button" value="Restart" data-api="shutdown?restart=1"/>
+        <input id="shutdownbtn" type="button" value="Shutdown" data-api="shutdown?restart=0"/>
+        <div id="infoBox">
+            <h5>Info : </h5>
+            <textarea readonly id="info"></textarea>
+        </div>
+    </form>
+    <script src="scripts/jquery-3.6.0.min.js" type="application/javascript"></script>
+    <script type="application/javascript" src="scripts/debug.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed2_galactic_NX
+
+SHELL ["/bin/bash", "-c"]
+ENV SHELL /bin/bash
+
+COPY /zed2_tensorrt_yolov5 /zed2_tensorrt_yolov5/
+
+RUN cd zed2_tensorrt_yolov5/build/ \
+&& cmake .. \ 
+&& make
+
+
+

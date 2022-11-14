@@ -1,0 +1,22 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:foxy-ros-base-l4t-r32.6.1
+
+ENV ROS_WS /ros2_ws
+RUN mkdir -p ${ROS_WS}/src
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    geographiclib-tools \
+    build-essential \
+    cmake \
+    libgeographic-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+RUN bash -c "cd ${ROS_WS}\
+&& source /opt/ros/foxy/install/setup.bash\
+&& git clone -b foxy-devel https://github.com/ros/angles.git \
+&& git clone -b ros2 https://github.com/ros-geographic-info/geographic_info.git \
+&& git clone -b foxy https://github.com/ros/diagnostics.git \
+&& git clone -b foxy-devel https://github.com/cra-ros-pkg/robot_localization.git\
+&& git clone -b foxy https://github.com/ros/joint_state_publisher.git \
+&& colcon build --symlink-install"

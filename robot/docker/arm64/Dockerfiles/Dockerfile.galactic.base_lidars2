@@ -1,0 +1,24 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV SHELL /bin/bash
+SHELL ["/bin/bash", "-c"]
+
+ENV ROS_WS /ros2_ws
+RUN mkdir -p ${ROS_WS}/src
+
+COPY ./packages/ros2_src/control ${ROS_WS}/src/control
+COPY ./packages/ros2_src/imu_raw ${ROS_WS}/src/imu_raw
+COPY ./packages/ros2_src/odometry ${ROS_WS}/src/odometry
+COPY ./packages/ros2_src/base_launch ${ROS_WS}/src/base_launch
+
+
+RUN bash -c 'apt-get update \
+&& apt-get install -y --no-install-recommends ros-galactic-tf2* \
+ros-galactic-nav-msgs \
+&& cd ${ROS_WS}/src/ \
+&& git clone https://debanik-at-153479249734:sXT9ByfqLYjNZLzEBZ5JnE0mcXDhT0LqIRDj8XI2IaU=@git-codecommit.us-east-2.amazonaws.com/v1/repos/sllidar_ros2 \
+&& cd ${ROS_WS}\
+&& rosdep install --from-paths src --ignore-src -y\
+&& . /opt/ros/$ROS_DISTRO/setup.bash \
+&& colcon build --symlink-install'

@@ -1,0 +1,22 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:nav2_slam
+
+SHELL ["/bin/bash", "-c"]
+ENV SHELL /bin/bash
+
+ENV ROS_WS /nav2_tune
+RUN mkdir -p ${ROS_WS}/src
+COPY ./packages/ros2_src/ros2_bot ${ROS_WS}/src
+
+RUN cd ${ROS_WS} &&\
+apt-get update -y &&\
+source /opt/ros/foxy/install/setup.bash &&\
+rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy &&\
+source /rviz2_ws/install/setup.bash &&\
+source /gazebo2_ws/install/setup.bash &&\
+source /utility_ws/install/setup.bash &&\
+source /slam_ws/install/setup.bash &&\
+source /nav2_ws/install/setup.bash &&\
+colcon build --symlink-install &&\
+rm -rf /var/lib/apt/lists/* && \
+apt-get clean
+

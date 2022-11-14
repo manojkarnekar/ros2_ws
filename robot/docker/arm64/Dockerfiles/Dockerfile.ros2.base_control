@@ -1,0 +1,10 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic
+
+ENV ROS_WS /ros2_control_ws
+RUN mkdir -p ${ROS_WS}/src
+# COPY ./packages/ros2_src/ros2_bot ${ROS_WS}/src
+COPY ./packages/ros2_src/base_control/ ${ROS_WS}/src
+
+RUN bash -c "cd ${ROS_WS}\
+&& source /opt/ros/galactic/setup.bash\
+&& colcon build --symlink-install"

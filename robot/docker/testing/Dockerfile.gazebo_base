@@ -1,0 +1,18 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:rviz2
+
+ENV ROS_WS /gazebo2_ws
+RUN mkdir -p ${ROS_WS}/src
+
+RUN bash -c "cd ${ROS_WS}/src/ &&\
+git clone -b foxy https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
+rm -rf gazebo_ros_pkgs/gazebo_plugins && \
+rm -rf gazebo_ros_pkgs/gazebo_ros_control "
+
+RUN bash -c "cd ${ROS_WS} \
+&& source /opt/ros/foxy/install/setup.bash \
+&& source /rviz2_ws/install/setup.bash \
+&& apt-get update \
+&& rosdep install -q -y -r --from-paths src --ignore-src --rosdistro=foxy -y\
+&& colcon build --symlink-install \
+&& source install/setup.bash"
+

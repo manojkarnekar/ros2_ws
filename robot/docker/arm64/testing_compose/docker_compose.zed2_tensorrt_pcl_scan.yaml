@@ -1,0 +1,52 @@
+version: "2.3"
+
+# networks:
+#   ros:
+#     driver: bridge
+
+services:
+  # zed run on Xivir sar galactic
+  sar_galactic_zed_run_NX:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed_tensorrt_pcl_to_depth_points
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: ./zed2_tensorrt_yolov5/build/yolov5_zed -d /zed2_tensorrt_yolov5/build/bed_weights.engine "/cv_data/bed.csv"
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/cv_data:/cv_data
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+  
+  sar_galactic_zed_pose_pub:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.base_control
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c 'source /ros2_control_ws/install/setup.bash && ros2 run ros2_bot csv_pose_ros_pcl_scan "/cv_data/bed.csv"'
+      volumes:
+        - $PWD/packages/ros2_src/ros2_bot/cv_data:/cv_data
+      tty: true
+      privileged: true ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+
+  sar_galactic_bed_scan_pub:
+      image: 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:galactic.base_control
+      environment:
+        - "ROS_DOMAIN_ID=0"
+      command: bash -c 'source /ros2_control_ws/install/setup.bash && ros2 run ros2_bot zed2_full_bed_scan'
+      tty: true
+      privileged: false ## we need to revisit the privileged
+      network_mode: host
+      ipc: host
+      restart: always
+      

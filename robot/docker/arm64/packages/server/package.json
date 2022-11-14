@@ -1,0 +1,23 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.27.2",
+        "bmp-js": "^0.1.0",
+        "express": "^4.17.1",
+        "jimp": "^0.16.0",
+        "livecam": "^0.2.0",
+        "roslib": "^1.1.0",
+        "serialport": "^10.4.0",
+        "sqlite3": "^5.0.11",
+        "ws": "^1.1.5"
+    }
+}

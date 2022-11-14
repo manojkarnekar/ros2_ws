@@ -1,0 +1,15 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed2_galactic_NX
+
+ARG ROS_PKG=ros_base
+ENV ROS_DISTRO=galactic
+ENV ROS_ROOT=/opt/ros/${ROS_DISTRO}
+
+ENV ROS_WS /cloud_ws
+COPY ./packages/ros2_src/pointcloud_to_laserscan ${ROS_WS}/src/pointcloud_to_laserscan/
+
+RUN cd ${ROS_WS}/src/ &&\
+git clone -b galactic https://github.com/ros-perception/laser_geometry.git &&\
+cd ${ROS_WS} && \
+source ${ROS_ROOT}/install/setup.bash && \
+source /zed2_ws/install/setup.bash && \
+colcon build --symlink-install --cmake-args=-DCMAKE_BUILD_TYPE=Release

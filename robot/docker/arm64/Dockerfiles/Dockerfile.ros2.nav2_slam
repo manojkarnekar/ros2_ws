@@ -1,0 +1,41 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:slam_tool_box
+
+ENV ROS_WS /nav2_ws
+RUN mkdir -p ${ROS_WS}/src
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    geographiclib-tools \
+    build-essential \
+    cmake \
+    libgeographic-dev \
+	libompl-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+RUN bash -c "git clone https://github.com/BehaviorTree/BehaviorTree.CPP.git \
+&& source /opt/ros/foxy/install/setup.bash \
+&& cd BehaviorTree.CPP/ \
+&& mkdir build; cd build \
+&& cmake ..\
+&& make \
+&& make install"
+
+RUN bash -c "cd ${ROS_WS}/src/\
+&& source /opt/ros/foxy/install/setup.bash \
+&& git clone -b foxy https://github.com/ros-perception/laser_geometry.git \
+&& git clone -b foxy-devel https://github.com/ros/angles.git \
+&& git clone -b foxy-devel https://github.com/ros/bond_core.git \
+&& git clone -b foxy https://github.com/ros-planning/navigation_msgs.git \
+&& git clone -b foxy-devel https://github.com/ros-planning/navigation2.git"
+
+
+RUN bash -c "cd ${ROS_WS} && \
+source /opt/ros/foxy/install/setup.bash && \
+apt-get update && \
+rosdep install -y -r -q --from-paths src --ignore-src --rosdistro foxy && \
+source /rviz2_ws/install/setup.bash && \
+source /gazebo2_ws/install/setup.bash && \
+source /utility_ws/install/setup.bash && \
+source /slam_ws/install/setup.bash && \
+colcon build --symlink-install"

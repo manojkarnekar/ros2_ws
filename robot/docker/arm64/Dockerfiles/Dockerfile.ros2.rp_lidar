@@ -1,0 +1,10 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:foxy-ros-base-l4t-r32.6.1
+
+ENV ROS_WS /ros2_ws
+# RUN mkdir -p ${ROS_WS}/src
+COPY ./packages/LIDAR_PKG/rplidar_ros ${ROS_WS}/src
+
+RUN bash -c "cd ${ROS_WS}\
+&& apt-get update -y\
+&& source /opt/ros/foxy/install/setup.bash\
+&& colcon build --symlink-install"

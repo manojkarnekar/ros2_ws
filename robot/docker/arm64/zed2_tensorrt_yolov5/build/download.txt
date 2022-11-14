@@ -1,0 +1,3 @@
+https://drive.google.com/file/d/1vAZrUSjEaQcQaNBKhI0eJuGg2qQSaA86/view?usp=sharing
+scp /home/dj/bed_weights.engine dev@192.168.0.122:/home/dev/sar/docker/arm64/zed2_tensorrt_yolov5/build/
+docker build -f Dockerfile.zed_tensorrt_nano -t 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:zed_tensorrt_nano .

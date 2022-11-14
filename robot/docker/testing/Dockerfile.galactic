@@ -1,0 +1,23 @@
+FROM arm64v8/ros:galactic
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-galactic-teleop-twist-keyboard \
+    ros-galactic-joint-state-publisher  \
+    ros-galactic-robot-state-publisher  \
+    ros-galactic-slam-toolbox  \
+    ros-galactic-navigation2  \
+    ros-galactic-nav2-bringup  \
+    ros-galactic-tf-transformations  \
+    ros-galactic-robot-localization \
+    ros-galactic-turtlebot3-.* && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+
+ENV ROS_WS /ros2_ws
+RUN mkdir -p ${ROS_WS}/src
+COPY ./packages/ros2_src/ros2_bot ${ROS_WS}/src
+RUN bash -c "cd ${ROS_WS} \
+&&  source /opt/ros/galactic/setup.bash \
+&&  colcon build --symlink-install"
+

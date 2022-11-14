@@ -1,0 +1,26 @@
+{
+    "connectionString": {
+        "path": "/dev/battery",
+        "baudRate": 19200
+    },
+    "delimeter": {
+        "delimiter": "\r\n"
+    },
+    "parseList": {
+        "V": {
+            "isNumber": true
+        },
+        "I": {
+            "isNumber": true
+        },
+        "P": {
+            "isNumber": true
+        },
+        "CE": {
+            "isNumber": true
+        },
+        "SOC": {
+            "isNumber": true
+        }
+    }
+}

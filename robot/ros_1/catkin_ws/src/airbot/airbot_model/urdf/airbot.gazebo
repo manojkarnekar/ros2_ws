@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="airbot">
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<!-- <robotNamespace>airbot</robotNamespace> -->
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+		</plugin>
+	</gazebo>
+
+	<!-- Drive controller -->
+	<gazebo>
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<alwaysOn>true</alwaysOn>
+			<legacyMode>false</legacyMode>
+			<updateRate>15</updateRate>
+			<leftJoint>left_drive_wheel_joint</leftJoint>
+			<rightJoint>right_drive_wheel_joint</rightJoint>
+			<wheelSeparation>0.3553</wheelSeparation>
+			<wheelDiameter>0.203</wheelDiameter>
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom</odometryTopic>
+			<odometryFrame>odom</odometryFrame>
+			<odometrySource>encoder</odometrySource>
+			<publishOdomTF>true</publishOdomTF>
+			<publishTf>true</publishTf>
+			<broadcastTF>true</broadcastTF>
+			<rosDebugLevel>na</rosDebugLevel>
+			<wheelAcceleration>1.8</wheelAcceleration>
+			<wheelTorque>30</wheelTorque>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<publishWheelTF>false</publishWheelTF>
+			<publishWheelJointState>true</publishWheelJointState>
+		</plugin>
+	</gazebo>
+
+	<!-- Head Joint Transmission -->
+  <transmission name="head_joint_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="head_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="head_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+	<!-- ULTRASONIC SENSOR 1 -->
+	<gazebo reference="front_left_sensor_link">
+		<sensor type="ray" name="front_left_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>false</visualize>
+			<update_rate>15</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.14835</min_angle>
+						<max_angle>0.14835</max_angle>
+					</horizontal>
+					<vertical>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.1</min_angle>
+						<max_angle>0.1</max_angle>
+					</vertical>
+				</scan>
+				<range>
+					<min>0.05</min>
+					<max>1</max>
+					<resolution>0.02</resolution>
+				</range>
+			</ray>
+			<plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				<gaussianNoise>0.005</gaussianNoise>
+				<alwaysOn>true</alwaysOn>
+				<updateRate>10</updateRate>
+				<topicName>sensor/front_left</topicName>
+				<frameName>front_left_sensor_link</frameName>
+				<radiation>INFRARED</radiation>
+				<fov>0.2967</fov>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- ULTRASONIC SENSOR 2 -->
+	<gazebo reference="front_right_sensor_link">
+		<sensor type="ray" name="front_right_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>false</visualize>
+			<update_rate>15</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.14835</min_angle>
+						<max_angle>0.14835</max_angle>
+					</horizontal>
+					<vertical>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.1</min_angle>
+						<max_angle>0.1</max_angle>
+					</vertical>
+				</scan>
+				<range>
+					<min>0.05</min>
+					<max>1</max>
+					<resolution>0.02</resolution>
+				</range>
+			</ray>
+			<plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				<gaussianNoise>0.005</gaussianNoise>
+				<alwaysOn>true</alwaysOn>
+				<updateRate>10</updateRate>
+				<topicName>sensor/front_right</topicName>
+				<frameName>front_right_sensor_link</frameName>
+				<radiation>INFRARED</radiation>
+				<fov>0.2967</fov>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- ULTRASONIC SENSOR 3 -->
+	<gazebo reference="rear_left_sensor_link">
+		<sensor type="ray" name="rear_left_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>false</visualize>
+			<update_rate>15</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.14835</min_angle>
+						<max_angle>0.14835</max_angle>
+					</horizontal>
+					<vertical>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.1</min_angle>
+						<max_angle>0.1</max_angle>
+					</vertical>
+				</scan>
+				<range>
+					<min>0.05</min>
+					<max>1</max>
+					<resolution>0.02</resolution>
+				</range>
+			</ray>
+			<plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				<gaussianNoise>0.005</gaussianNoise>
+				<alwaysOn>true</alwaysOn>
+				<updateRate>10</updateRate>
+				<topicName>sensor/rear_left</topicName>
+				<frameName>rear_left_sensor_link</frameName>
+				<radiation>INFRARED</radiation>
+				<fov>0.2967</fov>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- ULTRASONIC SENSOR 4 -->
+	<gazebo reference="rear_right_sensor_link">
+		<sensor type="ray" name="rear_right_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>false</visualize>
+			<update_rate>15</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.14835</min_angle>
+						<max_angle>0.14835</max_angle>
+					</horizontal>
+					<vertical>
+						<samples>10</samples>
+						<resolution>1</resolution>
+						<min_angle>-0.1</min_angle>
+						<max_angle>0.1</max_angle>
+					</vertical>
+				</scan>
+				<range>
+					<min>0.05</min>
+					<max>1</max>
+					<resolution>0.02</resolution>
+				</range>
+			</ray>
+			<plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				<gaussianNoise>0.005</gaussianNoise>
+				<alwaysOn>true</alwaysOn>
+				<updateRate>10</updateRate>
+				<topicName>sensor/rear_right</topicName>
+				<frameName>rear_right_sensor_link</frameName>
+				<radiation>INFRARED</radiation>
+				<fov>0.2967</fov>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- Top Lamp using Rays -->
+	<gazebo reference="top_lamp_link">
+		<sensor type="ray" name="top_lamp">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>50</update_rate>
+			<ray>
+				<scan>
+					 <horizontal>
+							<samples>50</samples>
+							<resolution>1</resolution>
+							<min_angle>-0.25</min_angle>
+							<max_angle>0.25</max_angle>
+							<!-- <min_angle>-0.14835</min_angle>
+							<max_angle>0.14835</max_angle> -->
+					 </horizontal>
+					 <vertical>
+							<samples>50</samples>
+							<resolution>1</resolution>
+							<min_angle>-0.2</min_angle>
+							<max_angle>0.2</max_angle>
+							<!-- <min_angle>-0.14835</min_angle>
+							<max_angle>0.14835</max_angle> -->
+					 </vertical>
+				</scan>
+				<range>
+					<min>0</min>
+					<max>5</max>
+					<resolution>1</resolution>
+				</range>
+			</ray>
+			<!-- <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				 <gaussianNoise>0.005</gaussianNoise>
+				 <alwaysOn>true</alwaysOn>
+				 <updateRate>50</updateRate>
+				 <topicName>sensor/ir_front</topicName>
+				 <frameName>base_ir_front</frameName>
+				 <radiation>INFRARED</radiation>
+				 <fov>0.2967</fov>
+			</plugin> -->
+		</sensor>
+	</gazebo>
+
+	<!-- Left Lamp using Rays -->
+	<gazebo reference="left_lamp_link">
+		<sensor type="ray" name="left_lamp">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>50</update_rate>
+			<ray>
+				<scan>
+					 <horizontal>
+							<samples>50</samples>
+							<resolution>1</resolution>
+							<min_angle>-0.25</min_angle>
+							<max_angle>0.25</max_angle>
+							<!-- <min_angle>-0.14835</min_angle>
+							<max_angle>0.14835</max_angle> -->
+					 </horizontal>
+					 <vertical>
+							<samples>50</samples>
+							<resolution>1</resolution>
+							<min_angle>-0.2</min_angle>
+							<max_angle>0.2</max_angle>
+							<!-- <min_angle>-0.14835</min_angle>
+							<max_angle>0.14835</max_angle> -->
+					 </vertical>
+				</scan>
+				<range>
+					<min>0</min>
+					<max>5</max>
+					<resolution>1</resolution>
+				</range>
+			</ray>
+			<!-- <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				 <gaussianNoise>0.005</gaussianNoise>
+				 <alwaysOn>true</alwaysOn>
+				 <updateRate>50</updateRate>
+				 <topicName>sensor/ir_front</topicName>
+				 <frameName>base_ir_front</frameName>
+				 <radiation>INFRARED</radiation>
+				 <fov>0.2967</fov>
+			</plugin> -->
+		</sensor>
+	</gazebo>
+
+	<!-- Right Lamp using Rays -->
+	<gazebo reference="right_lamp_link">
+		<sensor type="ray" name="right_lamp">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>50</update_rate>
+			<ray>
+				<scan>
+					 <horizontal>
+							<samples>50</samples>
+							<resolution>1</resolution>
+							<min_angle>-0.25</min_angle>
+							<max_angle>0.25</max_angle>
+							<!-- <min_angle>-0.14835</min_angle>
+							<max_angle>0.14835</max_angle> -->
+					 </horizontal>
+					 <vertical>
+							<samples>50</samples>
+							<resolution>1</resolution>
+							<min_angle>-0.2</min_angle>
+							<max_angle>0.2</max_angle>
+							<!-- <min_angle>-0.14835</min_angle>
+							<max_angle>0.14835</max_angle> -->
+					 </vertical>
+				</scan>
+				<range>
+					<min>0</min>
+					<max>5</max>
+					<resolution>1</resolution>
+				</range>
+			</ray>
+			<!-- <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+				 <gaussianNoise>0.005</gaussianNoise>
+				 <alwaysOn>true</alwaysOn>
+				 <updateRate>50</updateRate>
+				 <topicName>sensor/ir_front</topicName>
+				 <frameName>base_ir_front</frameName>
+				 <radiation>INFRARED</radiation>
+				 <fov>0.2967</fov>
+			</plugin> -->
+		</sensor>
+	</gazebo>
+
+	<!-- IMU Sensor -->
+   <!-- <gazebo reference="base_link">
+		<gravity>true</gravity>
+		<sensor name="imu_sensor" type="imu">
+			<always_on>true</always_on>
+			<update_rate>100</update_rate>
+			<visualize>false</visualize>
+			<topic>__default_topic__</topic>
+			<plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+				<topicName>imu</topicName>
+				<bodyName>base_link</bodyName>
+				<updateRateHZ>100.0</updateRateHZ>
+				<gaussianNoise>0.0</gaussianNoise>
+				<xyzOffset>0 0 0</xyzOffset>
+				<rpyOffset>0 0 0</rpyOffset>
+				<frameName>base_link</frameName>
+				<initialOrientationAsReference>false</initialOrientationAsReference>
+		 </plugin>
+		 <pose>0 0 0 0 0 0</pose>
+		</sensor>
+  </gazebo> -->
+
+	<!-- Link Properties -->
+	<gazebo reference="left_drive_wheel_link">
+		<mu1 value="10"/>
+		<mu2 value="10"/>
+		<maxVel>0.5</maxVel>
+    <material>Gazebo/Black</material>
+	</gazebo>
+
+	<gazebo reference="right_drive_wheel_link">
+		<mu1 value="10"/>
+		<mu2 value="10"/>
+		<maxVel>0.5</maxVel>
+		<material>Gazebo/Black</material>
+	</gazebo>
+
+	<gazebo reference="base_link">
+		<mu1 value="0"/>
+		<mu2 value="0"/>
+		<material>Gazebo/Turquoise</material>
+	</gazebo>
+
+	<gazebo reference="top_panel_link">
+		<mu1 value="0"/>
+		<mu2 value="0"/>
+		<material>Gazebo/Grey</material>
+	</gazebo>
+
+	<gazebo reference="left_castor_link">
+		<mu1 value="0"/>
+		<mu2 value="0"/>
+		<material>Gazebo/Orange</material>
+	</gazebo>
+
+	<gazebo reference="right_castor_link">
+		<mu1 value="0"/>
+		<mu2 value="0"/>
+		<material>Gazebo/Orange</material>
+	</gazebo>
+
+</robot>

@@ -1,0 +1,23 @@
+FROM arm64v8/ros:foxy
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-foxy-teleop-twist-keyboard \
+    ros-foxy-joint-state-publisher  \
+    ros-foxy-robot-state-publisher  \
+    ros-foxy-slam-toolbox  \
+    ros-foxy-navigation2  \
+    ros-foxy-nav2-bringup  \
+    ros-foxy-tf-transformations  \
+    ros-foxy-robot-localization \
+    ros-foxy-turtlebot3-.* && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+ENV ROS_WS /ros2_ws
+RUN mkdir -p ${ROS_WS}/src
+COPY ./packages/ros2_src ${ROS_WS}/src
+RUN bash -c "cd ${ROS_WS} \
+&&  source /opt/ros/foxy/setup.bash \
+&&  colcon build --symlink-install"
+
+

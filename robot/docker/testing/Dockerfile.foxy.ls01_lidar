@@ -1,0 +1,10 @@
+FROM arm64v8/ros:foxy
+
+ENV ROS_WS /ros2_ws
+RUN mkdir -p ${ROS_WS}/src
+COPY ./packages/ros2_src/ls01b_ros2 ${ROS_WS}/src
+
+RUN bash -c "cd ${ROS_WS}\
+&& apt-get update -y\
+&& source /opt/ros/foxy/setup.bash\
+&& colcon build --symlink-install"

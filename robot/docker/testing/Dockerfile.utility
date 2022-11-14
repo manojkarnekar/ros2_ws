@@ -1,0 +1,20 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:gazebo_base
+
+ENV ROS_WS /utility_ws
+RUN mkdir -p ${ROS_WS}/src
+
+RUN bash -c "cd ${ROS_WS}/src/ \
+&& source /opt/ros/foxy/install/setup.bash \
+&& git clone -b release/foxy/nav2_common/0.4.7-1 https://github.com/SteveMacenski/navigation2-release.git navigation2/nav2_common \
+&& git clone -b release/foxy/nav2_map_server/0.4.7-1 https://github.com/SteveMacenski/navigation2-release.git navigation2/nav2_map_server \
+&& git clone -b release/foxy/nav2_msgs/0.4.7-1 https://github.com/SteveMacenski/navigation2-release.git navigation2/nav2_msgs \
+&& git clone -b release/foxy/nav2_util/0.4.7-1 https://github.com/SteveMacenski/navigation2-release.git navigation2/nav2_util "
+
+RUN bash -c "cd ${ROS_WS} \
+&& source /opt/ros/foxy/install/setup.bash \
+&& source /rviz2_ws/install/setup.bash \
+&& source /gazebo2_ws/install/setup.bash \
+&& apt-get update \
+&& rosdep update \
+&& rosdep install -q -y -r --from-paths src --ignore-src --rosdistro=foxy -y \
+&& colcon build --merge-install --cmake-args -DCMAKE_BUILD_TYPE=Release"

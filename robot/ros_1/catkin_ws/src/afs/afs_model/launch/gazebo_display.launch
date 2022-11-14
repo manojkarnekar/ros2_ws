@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Load four_wheel_steering model -->
+  <!--param name="robot_description"
+         command="$(find xacro)/xacro '$(find afs_model)/urdf/afs_model.urdf'" /-->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find afs_model)/urdf/afs.xacro'"/>
+  <rosparam>
+    /tricycle_controller/wheel_radius: 0.127
+    /tricycle_controller/wheel_base: 0.892
+  </rosparam>
+
+  <!-- Load controller config -->
+  <rosparam command="load" file="$(find afs_model)/config/tricycle_controller.yaml" />
+
+  <!-- Spawn controller -->
+  <node name="controller_spawner"
+        pkg="controller_manager" type="spawner" output="screen"
+        args="tricycle_controller joint_state_controller" />
+
+  <!--node
+    name="joint_state_publisher_gui"
+    pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui" /-->
+
+  <!-- Publish joint states on tf -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <!--node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-file $(find afs_model)/urdf/afs_model.urdf -urdf -model afs_model"/-->
+
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -param robot_description -model afs_model"/>
+  <!--node pkg="afs_control" name="afs_line.py" type="afs_line.py" output="screen"/-->
+  <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find afs_model)/urdf.rviz"/-->
+  <remap from="tricycle_controller/cmd_vel" to="cmd_vel"/>
+  <remap from="tricycle_controller/odom" to="odom"/>
+</launch>

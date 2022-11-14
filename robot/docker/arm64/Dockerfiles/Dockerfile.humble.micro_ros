@@ -1,0 +1,27 @@
+FROM 153479249734.dkr.ecr.us-east-2.amazonaws.com/sar:humble
+
+## micro-ros install
+RUN mkdir -p uros_ws
+WORKDIR /uros_ws
+
+RUN git clone --depth 1 -b humble https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup \
+&& . /opt/ros/$ROS_DISTRO/setup.sh \
+&& apt update \
+&& apt install -y ed python3-pip \
+&& apt install -y ros-$ROS_DISTRO-rmw-fastrtps-cpp \
+&&  apt remove -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
+&&  apt autoremove -y \
+&& rosdep update --rosdistro $ROS_DISTRO\
+&& rosdep install --from-paths src --ignore-src -y\
+&& colcon build
+
+RUN . /opt/ros/$ROS_DISTRO/setup.sh \
+&& . install/local_setup.sh \
+&& apt update \
+&& ros2 run micro_ros_setup create_agent_ws.sh \
+&& colcon build --cmake-args -DUAGENT_USE_SYSTEM_LOGGER=ON\
+&& rm -rf log/ build/ src/ \
+&& . /opt/ros/$ROS_DISTRO/setup.sh \
+&& . "/uros_ws/install/local_setup.sh" \
+&& rm -rf log/ build/ src/
+
